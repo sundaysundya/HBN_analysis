@@ -10,17 +10,18 @@ import scipy.io as scp
 import pandas as pd
 import os
 
-path = '/cis/home/sandhya/NDD/edgelists_fmriJHU'
+atlas = 'aal'
+path = '/cis/home/sandhya/NDD/edgelists_fmri' + atlas
 files = [f for f in os.listdir(path) if f.endswith('.edgelist')]
 
-names = [None] * 337
-X = np.zeros([337,2304])
+names = [None] * len(files)
 
-for i in range(0,337):
+
+for i in range(0,len(files)):
     names[i] = files[i][4:16]
 
 
-X = np.load('Xdata.npy')
+X = np.load('Xdata_'+atlas+'.npy')
 
 ASSQ = pd.ExcelFile('aut_pheno/ASSQ.xlsx')
 ASSQ = ASSQ.parse('Sheet1')
@@ -87,11 +88,14 @@ for i in range(0,len(intersection)):
         if intersection[i]==srstab[j,0]:
             Yintersect[i,2] = srstab[j,1]
 
-names2 = np.array(names).reshape(337,1)
+names2 = np.array(names).reshape(len(files),1)
 Xdata = np.concatenate((names2,X), axis=1)
 
-Xintersect = np.zeros([len(intersection),2304])
+Xintersect = np.zeros([len(intersection),X.shape[1]])
 for i in range(0, len(intersection)):
     for j in range(0,len(Xdata)):
         if intersection[i] == Xdata[j,0]:
-            Xintersect[i,:]=Xdata[0,1:2305]
+            Xintersect[i,:]=Xdata[j,1:(X.shape[1]+1)]
+            
+np.save('Xintersect_'+atlas,Xintersect)
+np.save('Yintersect_'+atlas,Yintersect)

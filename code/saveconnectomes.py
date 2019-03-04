@@ -8,18 +8,23 @@ from connectome import make_connectome
 import os
 import numpy as np
 
-
-path = '/cis/home/sandhya/NDD/edgelists_fmriJHU'
+atlas = 'tissue'
+edgelist = 'edgelists_fmri'+atlas
+corrmtx = 'corrmtx_fmri'+atlas
+path = '/cis/home/sandhya/NDD/'+edgelist
 files = [f for f in os.listdir(path) if f.endswith('.edgelist')]
+os.mkdir('/cis/home/sandhya/NDD/'+corrmtx)
 
-names = [None] * 337
-X = np.zeros([337,2304])
 
-for i in range(0,337):
+names = [None] * (len(files))
+corr_mtx = make_connectome(edgelist+'/'+files[0])   # to get dimension of specific atlas
+X = np.zeros([(len(files)),len(corr_mtx)**2])
+
+for i in range(0,(len(files))):
     names[i] = files[i][4:16]
-    corr_mtx = make_connectome('edgelists_fmriJHU/'+files[i])
-    np.save(os.path.join('corrmtx_fmriJHU/'+names[i]),corr_mtx)
-    vec = np.reshape(corr_mtx,(1, 2304))
+    corr_mtx = make_connectome(edgelist+'/'+files[i])
+    np.save(os.path.join(corrmtx+'/'+names[i]),corr_mtx)
+    vec = np.reshape(corr_mtx,(1, len(corr_mtx)**2))
     X[i]=vec
     
-np.save('Xdata',X)
+np.save('Xdata'+'_'+atlas,X)
