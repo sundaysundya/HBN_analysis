@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Feb  8 11:54:04 2019
-
+This code returns a correlation matrix from a ndmg outputted connectome file.
 @author: sandhya
 """
 import numpy as np

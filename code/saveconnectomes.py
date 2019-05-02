@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Feb  8 12:01:30 2019
-
+This code reads all of the '.edgelist' files in a folder (a single atlas), creates their correlation matrix, 
+vectorizes it, and puts it into a total matrix for the atlas where each row is one subject. It also saves each individual 
+subject's correlation matrix in a folder of all the matrices for that atlas.
 @author: sandhya
 """
 from connectome import make_connectome
