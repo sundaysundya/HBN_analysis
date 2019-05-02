@@ -33,24 +33,3 @@ for atlas in atlases:
     #print("Optimal Scale:", independence_test_metadata["optimal_scale"])
     
 np.save(test+'_results',results)
-
-
-        #pheno vs pheno
-testname = 'ARI_P'
-testname2 = 'ARI_S'
-import numpy as np
-from mgcpy.independence_tests.mgc.mgc import MGC
-import matplotlib.pyplot as plt; plt.style.use('classic')
-import seaborn as sns; sns.set()
-X = np.load('Xintersect_c_'+atlas+'.npy')
-    Y = np.load('Yintersect_c_'+atlas+'.npy')
-    #Y1 = Y[:,0].reshape(X.shape[0],1)
-    #Y2 = Y[:,1].reshape(X.shape[0],1)
-    #Y3 = Y[:,2].reshape(X.shape[0],1)  
-    mgc = MGC()
-    mgc_statistic, independence_test_metadata = mgc.test_statistic(X, Y)#, is_fast=True)
-    p_value, metadata = mgc.p_value(X, Y)#, is_fast=True)
-    
-    print(atlas)
-    print("MGC test statistic:", mgc_statistic)
-    print("P Value:", p_value)
