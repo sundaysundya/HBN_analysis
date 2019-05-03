@@ -9,13 +9,14 @@ subject's correlation matrix in a folder of all the matrices for that atlas.
 from connectome import make_connectome
 import os
 import numpy as np
+cwd = os.getcwd()
 
 atlas = 'tissue'
 edgelist = 'edgelists_fmri'+atlas
 corrmtx = 'corrmtx_fmri'+atlas
-path = '/cis/home/sandhya/NDD/'+edgelist
+path = cwd+'/'+edgelist
 files = [f for f in os.listdir(path) if f.endswith('.edgelist')]
-os.mkdir('/cis/home/sandhya/NDD/'+corrmtx)
+os.mkdir(cwd+'/'+corrmtx)
 
 
 names = [None] * (len(files))

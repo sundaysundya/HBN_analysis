@@ -9,11 +9,12 @@ import numpy as np
 import scipy.io as scp
 import pandas as pd
 import os
+cwd = os.getcwd()
 
         #find intersection of correlation matrix data and phenotypic data subjects
 atlases = ('JHU','aal','brodmann','CPAC200','desikan','DK','HarOxCort','HarOxSub','hemispheric','pp264','tissue')
 for atlas in atlases:
-    path = '/cis/home/sandhya/NDD/edgelists_fmri' + atlas
+    path = cwd+'/edgelists_fmri' + atlas
     files = [f for f in os.listdir(path) if f.endswith('.edgelist')]
     
     names = [None] * len(files)
@@ -32,8 +33,6 @@ for atlas in atlases:
     test = test.parse('Sheet1')
     test = test.values
     testnam=test[:,0].astype('str')
-    #for i in range(0, len(assqnam)):
-    #    assqnam[i] = assqnam[i][1:13]
     sz = testnam.size
     testnam2 = testnam.reshape(sz,1)
     testnam= np.ndarray.tolist(testnam)
